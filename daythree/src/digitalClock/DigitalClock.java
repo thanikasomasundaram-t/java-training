@@ -16,7 +16,7 @@ public class DigitalClock {
 			while(true) {
 				dg.second();
 //				System.out.println(Clock.time);
-				System.out.println(dg.hour + ":" + dg.minute + ":" + dg.second);	
+	
 			}
 		});
 		
@@ -40,9 +40,9 @@ class Clock {
 	
 	static LocalDateTime time = LocalDateTime.now();
 	
-//	static int hour = time.getHour();
-//	static int minute = time.getMinute();
-//	static int second = time.getSecond();
+//	int hour = time.getHour();
+//	int minute = time.getMinute();
+//	int second = time.getSecond();
 	
 	int hour = 23;
 	int minute = 59;
@@ -52,8 +52,8 @@ class Clock {
 		try {
 				wait();
 //				System.out.println(hour + "hour...before");
-				if(minute == 60 || minute == 59) {
-					System.out.println(minute + " " + hour);
+				if(minute == 60) {
+//					System.out.println(minute + " " + hour);
 					minute = 0;
 					if(hour == 23) {
 						hour = 0;				
@@ -74,12 +74,12 @@ class Clock {
 		try {
 			wait();
 
-			if(second == 59 || second == 60) {
+			if(second == 60) {
 //				System.out.println("min" + minute);
 				second = 0;
-				notifyAll();
 			}
 			minute += 1;
+			
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -93,7 +93,9 @@ class Clock {
 				notifyAll();
 
 			}
+			System.out.println(hour + ":" + minute + ":" + second);
 			second += 1;
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
