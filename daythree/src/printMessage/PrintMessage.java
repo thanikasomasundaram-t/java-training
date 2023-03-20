@@ -5,28 +5,34 @@ import java.util.concurrent.Executors;
 
 public class PrintMessage {
 	
-	public static void display(String message) {
-		for(int i = 0; i< 3; i++)
-			System.out.println("[ ------" + message + "------ ]");
+	synchronized public static void display(String message) {
+			System.out.print(message);
 	}
 
 
 	public static void main(String[] args) {
 		
-		ExecutorService es = Executors.newFixedThreadPool(3);
-		System.out.println(Thread.currentThread().getName());
+		ExecutorService es = Executors.newFixedThreadPool(5);
 		
 		es.execute(()-> {
 			
-			display("thread one");
+			display("[");
 		});
 		es.execute(()-> {
 			
-			display("thread two");
+			display("-----");
 		});
 		es.execute(()-> {
 			
-			display("thread three");
+			display("Message");
+		});
+		es.execute(()-> {
+			
+			display("-----");
+		});
+		es.execute(()-> {
+			
+			display("]");
 		});
 
 	}

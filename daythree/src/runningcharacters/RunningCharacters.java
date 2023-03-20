@@ -7,12 +7,12 @@ public class RunningCharacters {
 
 	public static void main(String[] args) {
 		RunningCharacters rc = new RunningCharacters();
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
 		while(true) {
 			try {
-				int c = bf.read();
-				rc.display(c);
+				int inputRead = bufferedReader.read();
+				rc.display(inputRead);
 			}
 			catch(Exception e) {
 				System.out.println(e);

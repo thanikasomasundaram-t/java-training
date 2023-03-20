@@ -29,7 +29,8 @@ public class OddEven {
 			}
 
 		});
-	}
-	
+	}	
 
 }
+// I made two threads using Executor service and used runnable as a anonymous method to override run method.
+// I used this way just to show that threads can be run this way too.

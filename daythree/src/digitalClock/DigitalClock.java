@@ -40,9 +40,9 @@ class Clock {
 	
 	static LocalDateTime time = LocalDateTime.now();
 	
-//	int hour = time.getHour();
-//	int minute = time.getMinute();
-//	int second = time.getSecond();
+//	static int hour = time.getHour();
+//	static int minute = time.getMinute();
+//	static int second = time.getSecond();
 	
 	int hour = 23;
 	int minute = 59;
@@ -51,9 +51,7 @@ class Clock {
 	synchronized public void hour(){
 		try {
 				wait();
-//				System.out.println(hour + "hour...before");
 				if(minute == 60) {
-//					System.out.println(minute + " " + hour);
 					minute = 0;
 					if(hour == 23) {
 						hour = 0;				
@@ -73,11 +71,7 @@ class Clock {
 	synchronized public void minute(){
 		try {
 			wait();
-
-			if(second == 60) {
-//				System.out.println("min" + minute);
-				second = 0;
-			}
+			second = 0;
 			minute += 1;
 			
 
@@ -89,9 +83,9 @@ class Clock {
 	synchronized public void second() {
 		try {
 			wait(1000);
+
 			if(second == 59) {
 				notifyAll();
-
 			}
 			System.out.println(hour + ":" + minute + ":" + second);
 			second += 1;
