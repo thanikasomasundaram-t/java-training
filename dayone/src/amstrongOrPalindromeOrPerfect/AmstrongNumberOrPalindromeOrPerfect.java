@@ -37,7 +37,7 @@ public class AmstrongNumberOrPalindromeOrPerfect {
 	
 	public static int CheckPerfectNumber(int number) {
 		int result = 0;
-		for(int check = 1; check < number; check++) {
+		for(int check = 1; check <= number/2; check++) {
 			if(number%check == 0) {
 				result += check;
 			}
@@ -46,11 +46,11 @@ public class AmstrongNumberOrPalindromeOrPerfect {
 	}
 	
 	public static int CheckAmstrongNumber(int number) {
-		
+		int length =  Integer.toString(number).length();
 		int result = 0;
 		
 		while(number > 0) {
-			result += Math.pow(number%10, 3);
+			result += Math.pow(number%10, length);
 			number/= 10;	
 		}
 
