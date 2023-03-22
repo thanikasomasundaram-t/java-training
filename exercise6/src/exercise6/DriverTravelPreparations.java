@@ -25,32 +25,35 @@ class DriverTravelPreparations {
 		System.out.println(totalTravelTime);
 	}
 
+	public boolean isHoliday() {
+		int day = date.getDayOfWeek().getValue();
+		int dayDate = date.getDayOfMonth();
+		int month = date.getMonthValue();
+		if (day == 6 && dayDate > 7 && dayDate < 15) {
+			System.out.println("Second Saturday");
+			return true;
+		}
+		if (day == 7) {
+			System.out.println("Sunday");
+			return true;
+		}
+		if ((dayDate == 1 && month == 1) || (dayDate == 26 && month == 1) || (dayDate == 15 && month == 7)) {
+			System.out.println("Government Holiday");
+			return true;
+		}
+		return false;
+	}
+	
 	public void calculateDays() {
 		float totalTravelTimeInMinutes = totalTravelTime * 60;
 		System.out.println(totalTravelTimeInMinutes);
 		float remainingTimeInCurrentDay = time.until(LocalTime.MAX, ChronoUnit.MINUTES) + 1;
 
 		while (true) {
-			int day = date.getDayOfWeek().getValue();
-			int dayDate = date.getDayOfMonth();
-			int month = date.getMonthValue();
 			
-			if (day == 6 && dayDate > 7 && dayDate < 15) {
+			if(isHoliday()) {
 				remainingTimeInCurrentDay = 60 * 8;
 				date = date.plusDays(1);
-				System.out.println("Sat");
-				continue;
-			}
-			if (day == 7) {
-				remainingTimeInCurrentDay = 60 * 8;
-				date = date.plusDays(1);
-				System.out.println("Sun");
-				continue;
-			}
-			if ((dayDate == 1 && month == 1) || (dayDate == 26 && month == 1) || (dayDate == 15 && month == 7)) {
-				remainingTimeInCurrentDay = 60 * 8;
-				date = date.plusDays(1);
-				System.out.println("Gov");
 				continue;
 			}
 			
@@ -58,7 +61,7 @@ class DriverTravelPreparations {
 					? remainingTimeInCurrentDay % 480 == 0 ? 480 : remainingTimeInCurrentDay
 					: 0;
 			
-			System.out.println(date + " Remaining distance" + totalTravelTimeInMinutes + "curent" + remainingTimeInCurrentDay);
+			System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes);
 			remainingTimeInCurrentDay = 60 * 8;
 			
 			if (remainingTimeInCurrentDay > totalTravelTimeInMinutes) {
@@ -66,7 +69,7 @@ class DriverTravelPreparations {
 				int minutes = (int)totalTravelTimeInMinutes%60;
 				LocalTime finalTime = LocalTime.of(hours, minutes);
 				date = date.plusDays(1);
-				System.out.println(date + " Remaining distance" + totalTravelTimeInMinutes + "curent" + remainingTimeInCurrentDay);
+				System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes);
 				
 				System.out.println("Destination will be reached on: " + date + " at " + finalTime);
 				return;
