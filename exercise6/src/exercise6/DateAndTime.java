@@ -39,9 +39,3 @@ public class DateAndTime {
 	}
 
 }
-
-
-	// LocalTime todayMidNight = LocalTime.MAX;
-//	
-//	remainingTimeInCurrentDay = ChronoUnit.MINUTES.between(time, todayMidNight) + 1;
-

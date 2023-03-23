@@ -19,11 +19,17 @@ public class LorryTransportation {
 
 		System.out.println("Enter the final destination distance:");
 		float distance = sc.nextFloat();
+		try {
+			DateAndTime obj = new DateAndTime(startDate, startTime);
+			DriverTravelPreparations driverTravelPreparations = new DriverTravelPreparations(obj.getDate(), obj.getTime(), speed, distance);
+			driverTravelPreparations.getTotalTravellingTime();
+			driverTravelPreparations.calculateDays();
+		}
+		catch(Exception e) {
+			System.out.println("Sorry wrong input");
+		}
+		
 
-		DateAndTime obj = new DateAndTime(startDate, startTime);
-		DriverTravelPreparations driverTravelPreparations = new DriverTravelPreparations(obj.getDate(), obj.getTime(), speed, distance);
-		driverTravelPreparations.getTotalTravellingTime();
-		driverTravelPreparations.calculateDays();
 		
 		sc.close();
 	}

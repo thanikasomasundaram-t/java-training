@@ -37,7 +37,7 @@ class DriverTravelPreparations {
 			System.out.println("Sunday");
 			return true;
 		}
-		if ((dayDate == 1 && month == 1) || (dayDate == 26 && month == 1) || (dayDate == 15 && month == 7)) {
+		if ((dayDate == 1 && month == 1) || (dayDate == 26 && month == 1) || (dayDate == 15 && month == 8)) {
 			System.out.println("Government Holiday");
 			return true;
 		}
@@ -47,35 +47,48 @@ class DriverTravelPreparations {
 	public void calculateDays() {
 		float totalTravelTimeInMinutes = totalTravelTime * 60;
 		System.out.println(totalTravelTimeInMinutes);
-		float remainingTimeInCurrentDay = time.until(LocalTime.MAX, ChronoUnit.MINUTES) + 1;
+		float timeRemaining = time.until(LocalTime.MAX, ChronoUnit.MINUTES) + 1;
+		float remainingTimeInCurrentDay = timeRemaining;
+		System.out.println("dddd" + remainingTimeInCurrentDay);
 
 		while (true) {
-			
 			if(isHoliday()) {
-				remainingTimeInCurrentDay = 60 * 8;
 				date = date.plusDays(1);
+				remainingTimeInCurrentDay = 480;
 				continue;
 			}
-			
-			totalTravelTimeInMinutes -= remainingTimeInCurrentDay != 0
-					? remainingTimeInCurrentDay % 480 == 0 ? 480 : remainingTimeInCurrentDay
-					: 0;
-			
-			System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes);
-			remainingTimeInCurrentDay = 60 * 8;
-			
-			if (remainingTimeInCurrentDay > totalTravelTimeInMinutes) {
-				int hours = (int)totalTravelTimeInMinutes/60;
-				int minutes = (int)totalTravelTimeInMinutes%60;
-				LocalTime finalTime = LocalTime.of(hours, minutes);
-				date = date.plusDays(1);
-				System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes);
-				
-				System.out.println("Destination will be reached on: " + date + " at " + finalTime);
-				return;
-			}
+			if(remainingTimeInCurrentDay >= totalTravelTimeInMinutes) {
+				if(totalTravelTimeInMinutes >= 480) {
+					totalTravelTimeInMinutes -= 480;
+					remainingTimeInCurrentDay = 480;
+					System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes + " min");
+					if(totalTravelTimeInMinutes != 0) {
+						date = date.plusDays(1);		
+					}
 
-			date = date.plusDays(1);
+				}
+				else {
+					if(totalTravelTimeInMinutes == 0) {
+						totalTravelTimeInMinutes = 480;
+					}
+					int hours = (int)totalTravelTimeInMinutes/60;
+					int minutes = (int)totalTravelTimeInMinutes%60;
+					LocalTime finalTime = LocalTime.of(hours, minutes);
+					System.out.println("Destination will be reached on: " + date + " at " + finalTime);
+					return;
+				}
+			}
+			else {
+				if(totalTravelTimeInMinutes > remainingTimeInCurrentDay) {
+					totalTravelTimeInMinutes -= remainingTimeInCurrentDay;
+					remainingTimeInCurrentDay = 480;
+					System.out.println(date + " Remaining distance: " + totalTravelTimeInMinutes + "min");
+					date = date.plusDays(1);
+				}
+			}
+			
+
+			
 		}
 	}
 
