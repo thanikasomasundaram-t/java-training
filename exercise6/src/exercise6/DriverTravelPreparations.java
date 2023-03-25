@@ -49,7 +49,6 @@ class DriverTravelPreparations {
 		System.out.println(totalTravelTimeInMinutes);
 		float timeRemaining = time.until(LocalTime.MAX, ChronoUnit.MINUTES) + 1;
 		float remainingTimeInCurrentDay = timeRemaining;
-		System.out.println("dddd" + remainingTimeInCurrentDay);
 
 		while (true) {
 			if(isHoliday()) {
@@ -70,6 +69,9 @@ class DriverTravelPreparations {
 				else {
 					if(totalTravelTimeInMinutes == 0) {
 						totalTravelTimeInMinutes = 480;
+					}
+					if(remainingTimeInCurrentDay != 480) {
+						totalTravelTimeInMinutes = time.getHour()*60 + time.getMinute() +totalTravelTimeInMinutes;
 					}
 					int hours = (int)totalTravelTimeInMinutes/60;
 					int minutes = (int)totalTravelTimeInMinutes%60;
