@@ -8,18 +8,33 @@ public class FactoryPattern {
 
         System.out.println("choose you shop\nchicken\nmutton");
         String choice = sc.nextLine();
+        //input validation
+        try {
+        	if(choice != "mutton" || choice != "chicken") {
+        		throw new WrongInputException();
+        	}
+        }
+        catch(WrongInputException e) {
+        	System.out.println("Enter valid input");
+        }
+        finally {
+            BiriyaniFactory biriyaniFactoryRR = new RRBiriyani();
+            //choose required food to manufacture from factory pattern
+            biriyaniFactoryRR.chooseBiriyani(choice);
+            biriyaniFactoryRR.placeOrder();
+            
+            BiriyaniFactory biriyaniFactorySS = new SSBiriyani();
+            
+            //choose required food to manufacture from factory pattern
+            biriyaniFactorySS.chooseBiriyani(choice);
+            biriyaniFactorySS.placeOrder();
 
-        BiriyaniFactory biriyaniFactoryRR = new RRBiriyani();
+            sc.close();
+        }
 
-        biriyaniFactoryRR.chooseBiriyani(choice);
-        biriyaniFactoryRR.placeOrder();
         
-        BiriyaniFactory biriyaniFactorySS = new SSBiriyani();
-        
-        biriyaniFactorySS.chooseBiriyani(choice);
-        biriyaniFactorySS.placeOrder();
 
-        sc.close();
+
     }
 }
 
@@ -38,7 +53,7 @@ class SSBiriyani extends BiriyaniFactory {
     SSBiriyani() {
         System.out.println("Thank you for choosing SS Biriyani");
     }
-
+    // SS biriyani can create only ss style chicken and mutton biriyani from factory
     @Override
     public void chooseBiriyani(String type) {
         if(type.equals("chicken")) {
@@ -55,7 +70,8 @@ class RRBiriyani extends BiriyaniFactory {
     RRBiriyani() {
         System.out.println("Thank you for choosing RR Biriyani");
     }
-
+    // RR biriyani can create only RR style chicken and mutton biriyani from factory
+    
     @Override
     public void chooseBiriyani(String type) {
         if(type.equals("chicken")) {
@@ -72,7 +88,7 @@ abstract class Biriyani {
 }
 
 class SSChickenBiriyani extends Biriyani {
-
+	//objects are created from here...
     @Override
     public void getBiriyani() {
         System.out.println("SS Biriyani's special chicken biriyani is ready to serve");
@@ -81,7 +97,7 @@ class SSChickenBiriyani extends Biriyani {
 }
 
 class SSMuttonBiriyani extends Biriyani {
-
+	// objects are created from here...
     @Override
     public void getBiriyani() {
         System.out.println("SS Biriyani's special mutton biriyani is ready to serve");
@@ -91,7 +107,7 @@ class SSMuttonBiriyani extends Biriyani {
 }
 
 class RRChickenBiriyani extends Biriyani {
-
+	//objects are created from here...
     @Override
     public void getBiriyani() {
         System.out.println("RR Biriyani's special chicken biriyani is ready to serve");
@@ -100,7 +116,7 @@ class RRChickenBiriyani extends Biriyani {
 }
 
 class RRMuttonBiriyani extends Biriyani {
-
+	//objects are created from here...
     @Override
     public void getBiriyani() {
         System.out.println("RR Biriyani's special mutton biriyani is ready to serve");

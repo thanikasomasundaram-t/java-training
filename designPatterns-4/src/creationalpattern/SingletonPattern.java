@@ -13,13 +13,18 @@ public class SingletonPattern {
 
 
 class LocalStdSingleton {
+	//by making it private we can only create object from inside the class
+	// by making static we can only create a single instance
     private static LocalStdSingleton localStdSingleton;
 
     private LocalStdSingleton() {
         System.out.println("Access is granted by owner to use local std phones");
     }
-
-    public static LocalStdSingleton getKeyForLocalStdSingleton() {
+    
+    
+    // to avoid multiple threads from creating instance we use synchronized
+    //by adding static we make available to global
+    synchronized public static LocalStdSingleton getKeyForLocalStdSingleton() {
         if(localStdSingleton == null) {
             localStdSingleton = new LocalStdSingleton();
         }
