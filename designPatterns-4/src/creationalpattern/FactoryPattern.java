@@ -13,11 +13,6 @@ public class FactoryPattern {
         	if(choice != "mutton" || choice != "chicken") {
         		throw new WrongInputException();
         	}
-        }
-        catch(WrongInputException e) {
-        	System.out.println("Enter valid input");
-        }
-        finally {
             BiriyaniFactory biriyaniFactoryRR = new RRBiriyani();
             //choose required food to manufacture from factory pattern
             biriyaniFactoryRR.chooseBiriyani(choice);
@@ -31,10 +26,12 @@ public class FactoryPattern {
 
             sc.close();
         }
-
-        
-
-
+        catch(WrongInputException e) {
+        	System.out.println("Enter valid input");
+        }
+        finally {
+        	sc.close();
+        }
     }
 }
 
