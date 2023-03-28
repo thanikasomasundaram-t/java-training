@@ -23,8 +23,6 @@ public class FactoryPattern {
             //choose required food to manufacture from factory pattern
             biriyaniFactorySS.chooseBiriyani(choice);
             biriyaniFactorySS.placeOrder();
-
-            sc.close();
         }
         catch(WrongInputException e) {
         	System.out.println("Enter valid input");
