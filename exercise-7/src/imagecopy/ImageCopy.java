@@ -5,25 +5,22 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class ImageCopy {
-
-	public class ImageToByteArray {
-		
-	   public static void main(String args[]) throws Exception{
+	public class ImageToByteArray {	
+	   public static void main(String args[]) throws Exception{   
+		   File file = new File("./src/imagecopy/shiv.jpeg");
+		   FileInputStream fileInputStream = new FileInputStream(file);
 		   
-		   File readImg = new File("./src/imagecopy/shiv.jpeg");
-		   FileInputStream fileInputStream = new FileInputStream(readImg);
+		   file = new File("./src/imagecopy/copyshiv.jpeg");
+		   FileOutputStream fileOutputStream = new FileOutputStream(file);
 		   
-		   File outImg = new File("./src/imagecopy/copyshiv.jpeg");
-		   FileOutputStream fileoutputStream = new FileOutputStream(outImg);
+		   int byteValue;
 		   
-		   int readByte;
-		   
-		   while((readByte = fileInputStream.read()) != -1) {
-			   fileoutputStream.write(readByte);
+		   while((byteValue = fileInputStream.read()) != -1) {
+			   fileOutputStream.write(byteValue);
 		   }
 	      
 		   fileInputStream.close();
-		   fileoutputStream.close();
+		   fileOutputStream.close();
 		   System.out.println("success");
 	   }
 	}

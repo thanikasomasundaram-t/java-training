@@ -1,38 +1,31 @@
 package lineByLine;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
 public class LineByLine {
-	
 	public static void main(String[] args) {
-		
 		try {
-			File readFile = new File("./src/lineByline/index.txt");
-			FileReader fileReader = new FileReader(readFile);
-			BufferedReader bfRead = new BufferedReader(fileReader);
-		
-			File writtenFile = new File("./src/lineByline/write.txt");
-			FileWriter fileWriter = new FileWriter(writtenFile);
-			BufferedWriter bfWrite = new BufferedWriter(fileWriter);
-			
+			File file = new File("./src/lineByline/index.txt");
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+			file = new File("./src/lineByline/write.txt");
+			FileWriter fileWriter = new FileWriter(file);
+
 			String line;
-			
-			while((line = bfRead.readLine()) != null) {
+
+			while ((line = bufferedReader.readLine()) != null) {
 				System.out.println(line);
-				bfWrite.write(line);
-				bfWrite.newLine();
+				fileWriter.write(line+"\n");
 			}
 			System.out.println("success");
-		
-			
+
 			fileReader.close();
 			fileWriter.close();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

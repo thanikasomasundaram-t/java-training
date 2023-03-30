@@ -13,23 +13,19 @@ public class ObjectReadWrite {
 		
 		try {
 			File file = new File("./src/objectReadWrite/read.txt");
-			FileOutputStream fileoutputStream = new FileOutputStream(file);
-			ObjectOutputStream objectOutput = new ObjectOutputStream(fileoutputStream);	
-			objectOutput.writeObject(date);
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);	
+			objectOutputStream.writeObject(date);
 			
 			FileInputStream fileInputStream = new FileInputStream(file);
-			ObjectInputStream objectInput = new ObjectInputStream(fileInputStream);
-			System.out.println((Date) objectInput.readObject());
+			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			System.out.println((Date) objectInputStream.readObject());
 			
-			objectOutput.close();
-			objectInput.close();
+			objectOutputStream.close();
+			objectInputStream.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-
-		
-		
 	}
 }
