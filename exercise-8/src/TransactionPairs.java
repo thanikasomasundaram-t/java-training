@@ -3,13 +3,13 @@ import java.sql.*;
 public class TransactionPairs {
     public static void main(String args[]) {
         String url = "jdbc:mysql://localhost/paris";
-        Connection con = null;
-        Statement stmt;
-        PreparedStatement updateSales;
-        PreparedStatement updateTotal;
-        String updateString = "update COFFES " +
+        Connection connection = null;
+        Statement statement;
+        PreparedStatement salesUpdate;
+        PreparedStatement totalUpdate;
+        String saleUpdateQuery = "update COFFES " +
             "set SALES = ? where COF_NAME like ?";
-        String updateStatement = "update COFFES " +
+        String totalUpdateQuery = "update COFFES " +
             "set TOTAL = TOTAL + ? where COF_NAME like ?";
         String query = "select COF_NAME, SALES, TOTAL from COFFES ";
         try {
@@ -19,9 +19,9 @@ public class TransactionPairs {
             System.err.println(e.getMessage());
         }
         try {
-            con = DriverManager.getConnection(url, "root", "thanika@18");
-            updateSales = con.prepareStatement(updateString);
-            updateTotal = con.prepareStatement(updateStatement);
+            connection = DriverManager.getConnection(url, "root", "thanika@18");
+            salesUpdate = connection.prepareStatement(saleUpdateQuery);
+            totalUpdate = connection.prepareStatement(totalUpdateQuery);
             int[] salesForWeek = {
                 175,
                 150,
@@ -37,37 +37,37 @@ public class TransactionPairs {
                 "French_Roast_Decaf"
             };
             int len = coffees.length;
-            con.setAutoCommit(false);
+            connection.setAutoCommit(false);
             for (int i = 0; i < len; i++) {
-                updateSales.setInt(1, salesForWeek[i]);
-                updateSales.setString(2, coffees[i]);
+                salesUpdate.setInt(1, salesForWeek[i]);
+                salesUpdate.setString(2, coffees[i]);
 
-                updateSales.executeUpdate();
-                updateTotal.setInt(1, salesForWeek[i]);
-                updateTotal.setString(2, coffees[i]);
-                updateTotal.executeUpdate();
-                con.commit();
+                salesUpdate.executeUpdate();
+                totalUpdate.setInt(1, salesForWeek[i]);
+                totalUpdate.setString(2, coffees[i]);
+                totalUpdate.executeUpdate();
+                connection.commit();
             }
-            con.setAutoCommit(true);
-            updateSales.close();
-            updateTotal.close();
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            connection.setAutoCommit(true);
+            salesUpdate.close();
+            totalUpdate.close();
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 String c = rs.getString("COF_NAME");
                 int s = rs.getInt("SALES");
                 int t = rs.getInt("TOTAL");
                 System.out.println(c + " " + s + " " + t);
             }
-            stmt.close();
-            con.close();
+            statement.close();
+            connection.close();
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
-            if (con != null) {
+            if (connection != null) {
                 try {
                     System.err.print("Transaction is being ");
                     System.err.println("rolled back");
-                    con.rollback();
+                    connection.rollback();
                 } catch (SQLException excep) {
                     System.err.print("SQLException: ");
                     System.err.println(excep.getMessage());
